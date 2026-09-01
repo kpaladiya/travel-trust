@@ -19,7 +19,7 @@ import SocialAuthButtons from '../../src/components/auth/SocialAuthButtons';
 
 export default function LoginScreen() {
   const router = useRouter();
-  const { signIn, isLoading } = useAuth();
+  const { signIn, signInAsDemo, isLoading } = useAuth();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -53,6 +53,17 @@ export default function LoginScreen() {
       } else {
         Alert.alert('Login Failed', message);
       }
+    } finally {
+      setIsSigningIn(false);
+    }
+  };
+
+  const handleDemoSignIn = async (mode: 'finder' | 'creator') => {
+    setIsSigningIn(true);
+
+    try {
+      await signInAsDemo(mode);
+      router.replace('/(app)/(rides)');
     } finally {
       setIsSigningIn(false);
     }
@@ -143,6 +154,29 @@ export default function LoginScreen() {
 
           <View style={styles.socialSection}>
             <SocialAuthButtons disabled={isSigningIn} mode="continue" />
+          </View>
+
+          <View style={styles.demoSection}>
+            <Text style={styles.demoTitle}>Explore the interactive demo</Text>
+            <Text style={styles.demoDescription}>Browse rides as a traveler or publish a ride as a driver. Demo changes stay in this browser.</Text>
+            <View style={styles.demoActions}>
+              <TouchableOpacity
+                style={[styles.demoButton, isSigningIn && styles.buttonDisabled]}
+                onPress={() => void handleDemoSignIn('finder')}
+                disabled={isSigningIn}
+              >
+                <Ionicons name="search-outline" size={18} color="#007AFF" />
+                <Text style={styles.demoButtonText}>Try Finder</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.demoButton, isSigningIn && styles.buttonDisabled]}
+                onPress={() => void handleDemoSignIn('creator')}
+                disabled={isSigningIn}
+              >
+                <Ionicons name="car-outline" size={18} color="#007AFF" />
+                <Text style={styles.demoButtonText}>Try Creator</Text>
+              </TouchableOpacity>
+            </View>
           </View>
 
           <View style={styles.signupContainer}>
@@ -272,7 +306,49 @@ const styles = StyleSheet.create({
   },
   socialSection: {
     paddingHorizontal: 24,
+    marginBottom: 20,
+  },
+  demoSection: {
+    marginHorizontal: 24,
     marginBottom: 24,
+    padding: 16,
+    backgroundColor: '#F8FAFF',
+    borderWidth: 1,
+    borderColor: '#DCE8FF',
+    borderRadius: 12,
+  },
+  demoTitle: {
+    color: '#1F2937',
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  demoDescription: {
+    marginTop: 4,
+    color: '#4B5563',
+    fontSize: 13,
+    lineHeight: 19,
+  },
+  demoActions: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 14,
+  },
+  demoButton: {
+    flex: 1,
+    minHeight: 42,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 6,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#A9C8FF',
+    borderRadius: 8,
+  },
+  demoButtonText: {
+    color: '#007AFF',
+    fontSize: 13,
+    fontWeight: '700',
   },
   signupContainer: {
     flexDirection: 'row',

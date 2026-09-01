@@ -84,6 +84,7 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<SocialAuthResult>;
   signInWithGoogle: (input: GoogleSignInInput) => Promise<SocialAuthResult>;
   signInWithApple: (input: AppleSignInInput) => Promise<SocialAuthResult>;
+  signInAsDemo: (mode: UserExperienceMode) => Promise<void>;
   confirmEmailVerification: () => Promise<SocialAuthResult>;
   resendEmailVerification: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -414,6 +415,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     };
   };
 
+  const signInAsDemo = async (mode: UserExperienceMode) => {
+    const demoUser = normalizeUser({
+      id: 'demo-traveler',
+      email: 'demo@traveltrust.app',
+      firstName: 'Alex',
+      lastName: 'Morgan',
+      city: 'Frankfurt',
+      rating: 4.9,
+      reviews: 24,
+      experienceMode: mode,
+      compliance: buildDefaultConsent(false),
+      authProvider: 'password',
+      emailVerified: true,
+    });
+
+    await persistUser(demoUser, setUser);
+    await clearPendingVerificationSession();
+    setPendingVerificationEmail(null);
+  };
+
   const confirmEmailVerification = async () => {
     const pendingSession = await readPendingVerificationSession();
 
@@ -554,6 +575,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         signIn,
         signInWithGoogle,
         signInWithApple,
+        signInAsDemo,
         confirmEmailVerification,
         resendEmailVerification,
         signOut,
