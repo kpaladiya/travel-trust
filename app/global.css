@@ -1,0 +1,29 @@
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #f3f6fb;
+}
+
+@media screen and (min-width: 768px) {
+  #root {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at top left, rgba(0, 122, 255, 0.14), transparent 38rem),
+      #f3f6fb;
+  }
+
+  #root > * {
+    width: 100%;
+    max-width: 760px;
+    min-height: 100vh;
+    margin: 0 auto;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 0 48px rgba(17, 24, 39, 0.12);
+  }
+}

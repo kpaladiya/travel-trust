@@ -1,0 +1,16 @@
+# Dependencies and generated artifacts
+node_modules/
+.expo/
+dist/
+.DS_Store
+
+# Local configuration and platform credentials
+.env
+.env.*
+!.env.example
+google-services.json
+GoogleService-Info.plist
+google
+
+# Cloudflare local state
+.wrangler/

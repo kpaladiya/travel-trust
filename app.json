@@ -1,0 +1,75 @@
+{
+  "expo": {
+    "name": "TravelTrust",
+    "slug": "travelrust",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "primaryColor": "#007AFF",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.travelrust.app",
+      "buildNumber": "1",
+      "usesAppleSignIn": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "TravelTrust needs access to your location to show nearby rides and set pickup points.",
+        "UIRequiredDeviceCapabilities": [
+          "location-services",
+          "gps"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.travelrust.app",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "INTERNET"
+      ]
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "scheme": "travelrust",
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow TravelTrust to access your location to show nearby rides."
+        }
+      ],
+      "expo-notifications",
+      "expo-router",
+      "expo-font",
+      "expo-apple-authentication",
+      "expo-web-browser"
+    ],
+    "extra": {
+      "firebaseConfig": {
+        "apiKey": "AIzaSyDEXAMPLE_REPLACE_WITH_YOUR_KEY",
+        "authDomain": "travelrust.firebaseapp.com",
+        "projectId": "travelrust",
+        "storageBucket": "travelrust.appspot.com",
+        "messagingSenderId": "123456789",
+        "appId": "1:123456789:web:EXAMPLE"
+      },
+      "auth": {
+        "google": {
+          "webClientId": "REPLACE_WITH_YOUR_GOOGLE_WEB_CLIENT_ID",
+          "iosClientId": "REPLACE_WITH_YOUR_GOOGLE_IOS_CLIENT_ID",
+          "androidClientId": "REPLACE_WITH_YOUR_GOOGLE_ANDROID_CLIENT_ID"
+        }
+      },
+      "stripePublishableKey": "pk_test_REPLACE_WITH_YOUR_KEY",
+      "apiUrl": "https://api.travelrust.com",
+      "googleMapsApiKey": "REPLACE_WITH_YOUR_KEY"
+    }
+  }
+}
