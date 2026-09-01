@@ -7,6 +7,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../../src/context/AuthContext';
@@ -18,19 +19,28 @@ export default function ProfileScreen() {
   const { user, signOut, experienceMode, setExperienceMode } = useAuth();
   const router = useRouter();
 
+  const performLogout = async () => {
+    try {
+      await signOut();
+      router.replace('/(auth)');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to sign out');
+    }
+  };
+
   const handleLogout = () => {
+    if (Platform.OS === 'web') {
+      if (globalThis.confirm('Are you sure you want to sign out?')) {
+        void performLogout();
+      }
+      return;
+    }
+
     Alert.alert('Sign Out', 'Are you sure you want to sign out?', [
       { text: 'Cancel', onPress: () => {} },
       {
         text: 'Sign Out',
-        onPress: async () => {
-          try {
-            await signOut();
-            router.replace('/(auth)');
-          } catch (error) {
-            Alert.alert('Error', 'Failed to sign out');
-          }
-        },
+        onPress: () => void performLogout(),
       },
     ]);
   };
