@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -140,7 +140,6 @@ export default function RidesHomeScreen() {
     return () => clearTimeout(timer);
   }, [toCity]);
 
-  const hasLiveSuggestions = useMemo(() => hasGooglePlacesApiKey, []);
   const myPostedRides = allRides.filter((ride) => ride.createdByUserId === user?.id);
   const modeCopy = userExperienceCopy[experienceMode];
 
@@ -287,11 +286,11 @@ export default function RidesHomeScreen() {
         </View>
 
         <View style={styles.searchContainer}>
-          {!hasLiveSuggestions && (
+          {!hasGooglePlacesApiKey && (
             <View style={styles.infoBanner}>
               <Ionicons name="information-circle-outline" size={18} color="#92400E" />
               <Text style={styles.infoBannerText}>
-                Set `EXPO_PUBLIC_GOOGLE_MAPS_API_KEY` locally before starting Expo to enable live place suggestions.
+                Search by city, airport, or address to find a matching ride.
               </Text>
             </View>
           )}
