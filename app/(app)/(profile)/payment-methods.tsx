@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { addPaymentMethod, getPaymentMethods, removePaymentMethod, setDefaultPaymentMethod } from '../../../src/services/profile-tools';
 import type { PaymentMethod } from '../../../src/types/profile-tools';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 export default function PaymentMethodsScreen() {
   const router = useRouter();
@@ -101,28 +102,25 @@ export default function PaymentMethodsScreen() {
           ))}
         </View>
 
-        <View style={styles.formSection}>
+        <ResponsiveForm style={styles.formSection}>
           <Text style={styles.sectionTitle}>Add payment method</Text>
-          <Text style={styles.label}>Card brand</Text>
-          <TextInput style={styles.input} value={brand} onChangeText={setBrand} placeholder="Visa" />
-          <Text style={styles.label}>Cardholder name</Text>
-          <TextInput style={styles.input} value={holderName} onChangeText={setHolderName} placeholder="Rajesh Singh" />
-          <Text style={styles.label}>Last 4 digits</Text>
-          <TextInput style={styles.input} value={last4} onChangeText={setLast4} keyboardType="number-pad" placeholder="4242" />
-          <View style={styles.inlineFields}>
-            <View style={styles.inlineField}>
-              <Text style={styles.label}>Expiry month</Text>
+          <FormField label="Card brand"><TextInput style={styles.input} value={brand} onChangeText={setBrand} placeholder="Visa" /></FormField>
+          <FormField label="Cardholder name"><TextInput style={styles.input} value={holderName} onChangeText={setHolderName} placeholder="Rajesh Singh" /></FormField>
+          <FormField label="Last 4 digits"><TextInput style={styles.input} value={last4} onChangeText={setLast4} keyboardType="number-pad" placeholder="4242" /></FormField>
+          <FormField label="Expiry">
+            <View style={styles.inlineFields}>
+              <View style={styles.inlineField}>
+                <Text style={styles.inlineLabel}>Month</Text>
               <TextInput style={styles.input} value={expiryMonth} onChangeText={setExpiryMonth} keyboardType="number-pad" placeholder="12" />
-            </View>
-            <View style={styles.inlineField}>
-              <Text style={styles.label}>Expiry year</Text>
+              </View>
+              <View style={styles.inlineField}>
+                <Text style={styles.inlineLabel}>Year</Text>
               <TextInput style={styles.input} value={expiryYear} onChangeText={setExpiryYear} keyboardType="number-pad" placeholder="28" />
+              </View>
             </View>
-          </View>
-          <TouchableOpacity style={styles.submitButton} onPress={handleAddMethod}>
-            <Text style={styles.submitButtonText}>Add Method</Text>
-          </TouchableOpacity>
-        </View>
+          </FormField>
+          <FormAction><TouchableOpacity style={styles.submitButton} onPress={handleAddMethod}><Text style={styles.submitButtonText}>Add Method</Text></TouchableOpacity></FormAction>
+        </ResponsiveForm>
       </ScrollView>
     </SafeAreaView>
   );
@@ -152,7 +150,7 @@ const styles = StyleSheet.create({
   secondaryButtonText: { color: '#374151', fontSize: 13, fontWeight: '700' },
   formSection: { backgroundColor: '#fff', padding: 16, marginTop: 8 },
   sectionTitle: { fontSize: 16, fontWeight: '700', color: '#111827', marginBottom: 8 },
-  label: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8, marginTop: 12 },
+  inlineLabel: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8 },
   input: {
     backgroundColor: '#F3F4F6',
     borderRadius: 10,

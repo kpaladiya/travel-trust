@@ -16,6 +16,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../src/context/AuthContext';
 import SocialAuthButtons from '../../src/components/auth/SocialAuthButtons';
+import { FormAction, FormField, ResponsiveForm } from '../../src/components/forms/ResponsiveForm';
 
 export default function RegisterScreen() {
   const router = useRouter();
@@ -106,9 +107,9 @@ export default function RegisterScreen() {
             <View style={styles.headerSpacer} />
           </View>
 
-          <View style={styles.formContainer}>
-            <Text style={styles.label}>First Name</Text>
-            <View style={styles.inputContainer}>
+          <ResponsiveForm style={styles.formContainer}>
+            <FormField label="First Name" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="person-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -119,10 +120,10 @@ export default function RegisterScreen() {
                 editable={!isSigningUp}
                 placeholderTextColor="#999"
               />
-            </View>
-
-            <Text style={styles.label}>Last Name</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="Last Name" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="person-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -133,10 +134,10 @@ export default function RegisterScreen() {
                 editable={!isSigningUp}
                 placeholderTextColor="#999"
               />
-            </View>
-
-            <Text style={styles.label}>Email Address</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="Email Address" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="mail-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -148,10 +149,10 @@ export default function RegisterScreen() {
                 editable={!isSigningUp}
                 placeholderTextColor="#999"
               />
-            </View>
-
-            <Text style={styles.label}>Phone Number</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="Phone Number" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="call-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -162,10 +163,10 @@ export default function RegisterScreen() {
                 editable={!isSigningUp}
                 placeholderTextColor="#999"
               />
-            </View>
-
-            <Text style={styles.label}>City</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="City" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="location-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -176,10 +177,10 @@ export default function RegisterScreen() {
                 editable={!isSigningUp}
                 placeholderTextColor="#999"
               />
-            </View>
-
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="Password" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="lock-closed-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -197,10 +198,10 @@ export default function RegisterScreen() {
                   color="#007AFF"
                 />
               </TouchableOpacity>
-            </View>
-
-            <Text style={styles.label}>Confirm Password</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="Confirm Password" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="lock-closed-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -221,7 +222,8 @@ export default function RegisterScreen() {
                   color="#007AFF"
                 />
               </TouchableOpacity>
-            </View>
+              </View>
+            </FormField>
 
             <View style={styles.noticeCard}>
               <Ionicons name="information-circle-outline" size={18} color="#007AFF" />
@@ -282,7 +284,8 @@ export default function RegisterScreen() {
               I want optional product updates by email. I understand this consent can be changed later.
             </ConsentRow>
 
-            <TouchableOpacity
+            <FormAction>
+              <TouchableOpacity
               style={[styles.button, isSigningUp && styles.buttonDisabled]}
               onPress={handleSignUp}
               disabled={isSigningUp}
@@ -295,7 +298,8 @@ export default function RegisterScreen() {
                   <Text style={styles.buttonText}>Create Account</Text>
                 </>
               )}
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </FormAction>
 
             <SocialAuthButtons disabled={isSigningUp} mode="signup" />
 
@@ -305,7 +309,7 @@ export default function RegisterScreen() {
                 <Text style={styles.signinLink}>Sign in</Text>
               </TouchableOpacity>
             </View>
-          </View>
+            </ResponsiveForm>
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -361,6 +365,9 @@ const styles = StyleSheet.create({
   formContainer: {
     paddingHorizontal: 24,
     paddingVertical: 24,
+  },
+  authField: {
+    marginTop: 0,
   },
   label: {
     fontSize: 14,

@@ -16,6 +16,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../src/context/AuthContext';
 import SocialAuthButtons from '../../src/components/auth/SocialAuthButtons';
+import { FormAction, FormField, ResponsiveForm } from '../../src/components/forms/ResponsiveForm';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -92,9 +93,9 @@ export default function LoginScreen() {
             <Text style={styles.tagline}>Safe rides, trusted community</Text>
           </View>
 
-          <View style={styles.formContainer}>
-            <Text style={styles.label}>Email Address</Text>
-            <View style={styles.inputContainer}>
+          <ResponsiveForm style={styles.formContainer}>
+            <FormField label="Email Address" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="mail-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -106,10 +107,10 @@ export default function LoginScreen() {
                 editable={!isSigningIn}
                 placeholderTextColor="#999"
               />
-            </View>
-
-            <Text style={styles.label}>Password</Text>
-            <View style={styles.inputContainer}>
+              </View>
+            </FormField>
+            <FormField label="Password" labelStyle={styles.label} style={styles.authField}>
+              <View style={styles.inputContainer}>
               <Ionicons name="lock-closed-outline" size={20} color="#007AFF" />
               <TextInput
                 style={styles.input}
@@ -127,9 +128,10 @@ export default function LoginScreen() {
                   color="#007AFF"
                 />
               </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity
+              </View>
+            </FormField>
+            <FormAction>
+              <TouchableOpacity
               style={[styles.button, isSigningIn && styles.buttonDisabled]}
               onPress={handleEmailSignIn}
               disabled={isSigningIn}
@@ -142,15 +144,17 @@ export default function LoginScreen() {
                   <Text style={styles.buttonText}>Sign In</Text>
                 </>
               )}
-            </TouchableOpacity>
-
-            <View style={styles.complianceNote}>
+              </TouchableOpacity>
+            </FormAction>
+            <FormAction style={styles.complianceAction}>
+              <View style={styles.complianceNote}>
               <Ionicons name="shield-checkmark-outline" size={18} color="#007AFF" />
               <Text style={styles.complianceText}>
                 We only process data needed for onboarding, trust, safety, and support.
               </Text>
-            </View>
-          </View>
+              </View>
+            </FormAction>
+          </ResponsiveForm>
 
           <View style={styles.socialSection}>
             <SocialAuthButtons disabled={isSigningIn} mode="continue" />
@@ -248,6 +252,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     marginBottom: 24,
   },
+  authField: {
+    marginTop: 0,
+  },
   label: {
     fontSize: 14,
     fontWeight: '600',
@@ -296,6 +303,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
     marginTop: 14,
+  },
+  complianceAction: {
+    marginTop: 0,
   },
   complianceText: {
     flex: 1,

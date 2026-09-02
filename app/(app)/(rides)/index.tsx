@@ -20,6 +20,7 @@ import { hasGooglePlacesApiKey, searchPlaceSuggestions, type PlaceSuggestion } f
 import { getRides } from '../../../src/services/rides';
 import type { Ride } from '../../../src/types/rides';
 import { userExperienceCopy } from '../../../src/types/user-mode';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 type ActiveField = 'from' | 'to' | null;
 
@@ -285,7 +286,7 @@ export default function RidesHomeScreen() {
           </View>
         </View>
 
-        <View style={styles.searchContainer}>
+        <ResponsiveForm style={styles.searchContainer}>
           {!hasGooglePlacesApiKey && (
             <View style={styles.infoBanner}>
               <Ionicons name="information-circle-outline" size={18} color="#92400E" />
@@ -332,17 +333,18 @@ export default function RidesHomeScreen() {
             onSelectSuggestion={(suggestion) => selectSuggestion('to', suggestion)}
           />
 
-          <Text style={[styles.label, { marginTop: 12 }]}>Date</Text>
-          <TouchableOpacity style={styles.dateButton} onPress={() => setShowDatePicker(true)}>
-            <Ionicons name="calendar" size={20} color="#007AFF" />
-            <Text style={styles.dateButtonText}>
-              {date.toLocaleDateString('en-US', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-              })}
-            </Text>
-          </TouchableOpacity>
+          <FormField label="Date">
+            <TouchableOpacity style={styles.dateButton} onPress={() => setShowDatePicker(true)}>
+              <Ionicons name="calendar" size={20} color="#007AFF" />
+              <Text style={styles.dateButtonText}>
+                {date.toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                })}
+              </Text>
+            </TouchableOpacity>
+          </FormField>
 
           {showDatePicker && (
             <DateTimePicker
@@ -355,17 +357,19 @@ export default function RidesHomeScreen() {
             />
           )}
 
-          <TouchableOpacity style={styles.searchButton} onPress={handleSearch} disabled={isLoading}>
-            {isLoading ? (
-              <ActivityIndicator color="#fff" />
-            ) : (
-              <>
-                <Ionicons name="search" size={18} color="#fff" />
-                <Text style={styles.searchButtonText}>Search Rides</Text>
-              </>
-            )}
-          </TouchableOpacity>
-        </View>
+          <FormAction>
+            <TouchableOpacity style={styles.searchButton} onPress={handleSearch} disabled={isLoading}>
+              {isLoading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <>
+                  <Ionicons name="search" size={18} color="#fff" />
+                  <Text style={styles.searchButtonText}>Search Rides</Text>
+                </>
+              )}
+            </TouchableOpacity>
+          </FormAction>
+        </ResponsiveForm>
 
         {experienceMode === 'creator' && myPostedRides.length > 0 && (
           <View style={styles.resultsContainer}>
@@ -453,8 +457,7 @@ function PlaceField({
   const showSuggestions = isActive && suggestions.length > 0;
 
   return (
-    <View style={styles.fieldGroup}>
-      <Text style={styles.label}>{label}</Text>
+    <FormField label={label} labelStyle={styles.label} style={styles.fieldGroup}>
       <View style={styles.inputWrapper}>
         <Ionicons name="location" size={20} color="#007AFF" />
         <TextInput
@@ -486,7 +489,7 @@ function PlaceField({
           ))}
         </View>
       )}
-    </View>
+    </FormField>
   );
 }
 

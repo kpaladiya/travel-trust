@@ -21,6 +21,7 @@ import {
 } from '../../../src/services/travel-pricing';
 import { submitTravelPlan } from '../../../src/services/travel-plans';
 import type { TravelSupportServiceCode } from '../../../src/types/travel-help';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 export default function PostTravelRequestScreen() {
   const router = useRouter();
@@ -118,51 +119,21 @@ export default function PostTravelRequestScreen() {
             </View>
           </View>
 
-          <View style={styles.form}>
+          <ResponsiveForm style={styles.form}>
             <View style={styles.infoCard}>
               <Text style={styles.infoTitle}>{fullName}</Text>
               <Text style={styles.infoText}>This request will be posted from your signed-in profile.</Text>
             </View>
 
-            <Text style={styles.label}>From city</Text>
-            <TextInput style={styles.input} value={fromCity} onChangeText={setFromCity} placeholder="Delhi" />
-
-            <Text style={styles.label}>To city</Text>
-            <TextInput style={styles.input} value={toCity} onChangeText={setToCity} placeholder="Frankfurt" />
-
-            <Text style={styles.label}>Arrival date</Text>
-            <TextInput style={styles.input} value={arrivalDate} onChangeText={setArrivalDate} placeholder="2026-06-12" />
-
-            <Text style={styles.label}>Arrival time</Text>
-            <TextInput style={styles.input} value={arrivalTime} onChangeText={setArrivalTime} placeholder="18:30" />
-
-            <Text style={styles.label}>Airport / station</Text>
-            <TextInput
-              style={styles.input}
-              value={arrivalAirport}
-              onChangeText={setArrivalAirport}
-              placeholder="Frankfurt Airport (FRA)"
-            />
-
-            <Text style={styles.label}>Request title</Text>
-            <TextInput
-              style={styles.input}
-              value={assistanceTitle}
-              onChangeText={setAssistanceTitle}
-              placeholder="Need airport guidance and local transport help"
-            />
-
-            <Text style={styles.label}>Describe what you need</Text>
-            <TextInput
-              style={[styles.input, styles.multilineInput]}
-              value={description}
-              onChangeText={setDescription}
-              placeholder="I am arriving for the first time and need help reaching my hotel safely."
-              multiline
-            />
-
-            <Text style={styles.label}>Help needed</Text>
-            {travelSupportCatalog.map((service) => {
+            <FormField label="From city"><TextInput style={styles.input} value={fromCity} onChangeText={setFromCity} placeholder="Delhi" /></FormField>
+            <FormField label="To city"><TextInput style={styles.input} value={toCity} onChangeText={setToCity} placeholder="Frankfurt" /></FormField>
+            <FormField label="Arrival date"><TextInput style={styles.input} value={arrivalDate} onChangeText={setArrivalDate} placeholder="2026-06-12" /></FormField>
+            <FormField label="Arrival time"><TextInput style={styles.input} value={arrivalTime} onChangeText={setArrivalTime} placeholder="18:30" /></FormField>
+            <FormField label="Airport / station"><TextInput style={styles.input} value={arrivalAirport} onChangeText={setArrivalAirport} placeholder="Frankfurt Airport (FRA)" /></FormField>
+            <FormField label="Request title"><TextInput style={styles.input} value={assistanceTitle} onChangeText={setAssistanceTitle} placeholder="Need airport guidance and local transport help" /></FormField>
+            <FormField label="Describe what you need"><TextInput style={[styles.input, styles.multilineInput]} value={description} onChangeText={setDescription} placeholder="I am arriving for the first time and need help reaching my hotel safely." multiline /></FormField>
+            <FormField label="Help needed">
+              {travelSupportCatalog.map((service) => {
               const selected = supportServiceCodes.includes(service.code);
               return (
                 <TouchableOpacity
@@ -186,7 +157,8 @@ export default function PostTravelRequestScreen() {
                   <Text style={styles.packagePrice}>{formatEuro(service.priceEUR)}</Text>
                 </TouchableOpacity>
               );
-            })}
+              })}
+            </FormField>
 
             <View style={styles.pricingCard}>
               <Text style={styles.pricingTitle}>Automatic pricing</Text>
@@ -204,45 +176,12 @@ export default function PostTravelRequestScreen() {
               </View>
             </View>
 
-            <Text style={styles.label}>Languages</Text>
-            <TextInput
-              style={styles.input}
-              value={languagesText}
-              onChangeText={setLanguagesText}
-              placeholder="English, Hindi"
-            />
-
-            <Text style={styles.label}>Passenger count</Text>
-            <TextInput
-              style={styles.input}
-              value={passengerCount}
-              onChangeText={setPassengerCount}
-              keyboardType="number-pad"
-              placeholder="1"
-            />
-
-            <Text style={styles.label}>Luggage count</Text>
-            <TextInput
-              style={styles.input}
-              value={luggageCount}
-              onChangeText={setLuggageCount}
-              keyboardType="number-pad"
-              placeholder="2"
-            />
-
-            <Text style={styles.label}>Contact phone</Text>
-            <TextInput
-              style={styles.input}
-              value={contactPhone}
-              onChangeText={setContactPhone}
-              keyboardType="phone-pad"
-              placeholder="+49 170 123 4567"
-            />
-
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isSubmitting}>
-              <Text style={styles.submitButtonText}>{isSubmitting ? 'Posting...' : 'Post Request'}</Text>
-            </TouchableOpacity>
-          </View>
+            <FormField label="Languages"><TextInput style={styles.input} value={languagesText} onChangeText={setLanguagesText} placeholder="English, Hindi" /></FormField>
+            <FormField label="Passenger count"><TextInput style={styles.input} value={passengerCount} onChangeText={setPassengerCount} keyboardType="number-pad" placeholder="1" /></FormField>
+            <FormField label="Luggage count"><TextInput style={styles.input} value={luggageCount} onChangeText={setLuggageCount} keyboardType="number-pad" placeholder="2" /></FormField>
+            <FormField label="Contact phone"><TextInput style={styles.input} value={contactPhone} onChangeText={setContactPhone} keyboardType="phone-pad" placeholder="+49 170 123 4567" /></FormField>
+            <FormAction><TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isSubmitting}><Text style={styles.submitButtonText}>{isSubmitting ? 'Posting...' : 'Post Request'}</Text></TouchableOpacity></FormAction>
+          </ResponsiveForm>
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -298,13 +237,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 12,
     color: '#1E40AF',
-  },
-  label: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: 8,
-    marginTop: 12,
   },
   input: {
     backgroundColor: '#F3F4F6',

@@ -3,6 +3,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, Touchable
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../../src/context/AuthContext';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 export default function EditProfileScreen() {
   const router = useRouter();
@@ -35,26 +36,14 @@ export default function EditProfileScreen() {
           <Text style={styles.title}>Edit Profile</Text>
         </View>
 
-        <View style={styles.form}>
-          <Text style={styles.label}>First name</Text>
-          <TextInput style={styles.input} value={firstName} onChangeText={setFirstName} />
-
-          <Text style={styles.label}>Last name</Text>
-          <TextInput style={styles.input} value={lastName} onChangeText={setLastName} />
-
-          <Text style={styles.label}>Email</Text>
-          <TextInput style={styles.input} value={email} onChangeText={setEmail} keyboardType="email-address" />
-
-          <Text style={styles.label}>Phone</Text>
-          <TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" />
-
-          <Text style={styles.label}>City</Text>
-          <TextInput style={styles.input} value={city} onChangeText={setCity} />
-
-          <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-            <Text style={styles.saveButtonText}>Save Changes</Text>
-          </TouchableOpacity>
-        </View>
+        <ResponsiveForm style={styles.form}>
+          <FormField label="First name"><TextInput style={styles.input} value={firstName} onChangeText={setFirstName} /></FormField>
+          <FormField label="Last name"><TextInput style={styles.input} value={lastName} onChangeText={setLastName} /></FormField>
+          <FormField label="Email"><TextInput style={styles.input} value={email} onChangeText={setEmail} keyboardType="email-address" /></FormField>
+          <FormField label="Phone"><TextInput style={styles.input} value={phone} onChangeText={setPhone} keyboardType="phone-pad" /></FormField>
+          <FormField label="City"><TextInput style={styles.input} value={city} onChangeText={setCity} /></FormField>
+          <FormAction><TouchableOpacity style={styles.saveButton} onPress={handleSave}><Text style={styles.saveButtonText}>Save Changes</Text></TouchableOpacity></FormAction>
+        </ResponsiveForm>
       </ScrollView>
     </SafeAreaView>
   );
@@ -66,7 +55,6 @@ const styles = StyleSheet.create({
   backButton: { marginRight: 10 },
   title: { fontSize: 22, fontWeight: '700', color: '#111827' },
   form: { padding: 16 },
-  label: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8, marginTop: 12 },
   input: {
     backgroundColor: '#F3F4F6',
     borderRadius: 10,

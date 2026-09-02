@@ -4,6 +4,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { getSupportTickets, submitSupportTicket } from '../../../src/services/profile-tools';
 import type { SupportTicket } from '../../../src/types/profile-tools';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
+import { useAuth } from '../../../src/context/AuthContext';
+import { canAccessAdminConsole } from '../../../src/services/admin-access';
 
 const faqs = [
   {
@@ -22,6 +25,7 @@ const faqs = [
 
 export default function HelpSupportScreen() {
   const router = useRouter();
+  const { user } = useAuth();
   const [tickets, setTickets] = React.useState<SupportTicket[]>([]);
   const [subject, setSubject] = React.useState('');
   const [message, setMessage] = React.useState('');
@@ -64,10 +68,12 @@ export default function HelpSupportScreen() {
         </View>
 
         <View style={styles.section}>
-          <TouchableOpacity style={styles.linkCard} onPress={() => router.push('/(app)/(profile)/trust-dashboard')}>
-            <Text style={styles.linkTitle}>Open Trust Dashboard</Text>
-            <Text style={styles.linkMeta}>Review platform trust and flagged activity.</Text>
-          </TouchableOpacity>
+          {canAccessAdminConsole(user?.email) ? (
+            <TouchableOpacity style={styles.linkCard} onPress={() => router.push('/(app)/(profile)/trust-dashboard')}>
+              <Text style={styles.linkTitle}>Open Trust Dashboard</Text>
+              <Text style={styles.linkMeta}>Review platform trust and flagged activity.</Text>
+            </TouchableOpacity>
+          ) : null}
           <TouchableOpacity style={styles.linkCard} onPress={() => router.push('/(app)/(profile)/compliance-center')}>
             <Text style={styles.linkTitle}>Open Compliance Center</Text>
             <Text style={styles.linkMeta}>Manage consent, exports, deletion, and legal documents.</Text>
@@ -97,22 +103,12 @@ export default function HelpSupportScreen() {
           ))}
         </View>
 
-        <View style={styles.formSection}>
+        <ResponsiveForm style={styles.formSection}>
           <Text style={styles.sectionTitle}>Create support request</Text>
-          <Text style={styles.label}>Subject</Text>
-          <TextInput style={styles.input} value={subject} onChangeText={setSubject} placeholder="Payment issue" />
-          <Text style={styles.label}>Message</Text>
-          <TextInput
-            style={[styles.input, styles.multilineInput]}
-            value={message}
-            onChangeText={setMessage}
-            placeholder="Describe the issue and what you need help with."
-            multiline
-          />
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>Submit Ticket</Text>
-          </TouchableOpacity>
-        </View>
+          <FormField label="Subject"><TextInput style={styles.input} value={subject} onChangeText={setSubject} placeholder="Payment issue" /></FormField>
+          <FormField label="Message"><TextInput style={[styles.input, styles.multilineInput]} value={message} onChangeText={setMessage} placeholder="Describe the issue and what you need help with." multiline /></FormField>
+          <FormAction><TouchableOpacity style={styles.submitButton} onPress={handleSubmit}><Text style={styles.submitButtonText}>Submit Ticket</Text></TouchableOpacity></FormAction>
+        </ResponsiveForm>
       </ScrollView>
     </SafeAreaView>
   );
@@ -134,7 +130,6 @@ const styles = StyleSheet.create({
   rowBetween: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 },
   ticketStatus: { fontSize: 11, fontWeight: '700', color: '#007AFF', textTransform: 'capitalize' },
   formSection: { backgroundColor: '#fff', padding: 16, marginTop: 8 },
-  label: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8, marginTop: 12 },
   input: {
     backgroundColor: '#F3F4F6',
     borderRadius: 10,

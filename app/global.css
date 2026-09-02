@@ -22,12 +22,4 @@ body {
     min-height: 100vh;
     overflow: hidden;
   }
-
-  #root div:has(> input),
-  #root div:has(> textarea) {
-    width: 100%;
-    max-width: 640px;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }

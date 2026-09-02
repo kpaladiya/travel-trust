@@ -18,6 +18,7 @@ import { submitHelpOffer } from '../../../src/services/help-offers';
 import { formatEuro } from '../../../src/services/travel-pricing';
 import { getTravelPlanById } from '../../../src/services/travel-plans';
 import type { TravelHelpPlan } from '../../../src/types/travel-help';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 export default function OfferHelpScreen() {
   const router = useRouter();
@@ -108,7 +109,7 @@ export default function OfferHelpScreen() {
             </View>
           </View>
 
-          <View style={styles.form}>
+          <ResponsiveForm style={styles.form}>
             <View style={styles.pricingCard}>
               <Text style={styles.pricingTitle}>Helper earnings for this request</Text>
               <View style={styles.pricingRow}>
@@ -125,53 +126,27 @@ export default function OfferHelpScreen() {
               </View>
             </View>
 
-            <Text style={styles.label}>Your name</Text>
-            <TextInput style={styles.input} value={helperName} onChangeText={setHelperName} placeholder="Anita Sharma" />
-
-            <Text style={styles.label}>Phone number</Text>
-            <TextInput
-              style={styles.input}
-              value={helperPhone}
-              onChangeText={setHelperPhone}
-              placeholder="+49 170 123 4567"
-              keyboardType="phone-pad"
-            />
-
-            <Text style={styles.label}>City</Text>
-            <TextInput style={styles.input} value={helperCity} onChangeText={setHelperCity} placeholder="Frankfurt" />
-
-            <Text style={styles.label}>Meeting point</Text>
-            <TextInput
-              style={styles.input}
-              value={meetingPoint}
-              onChangeText={setMeetingPoint}
-              placeholder="Terminal 1 arrivals, gate B"
-            />
-
-            <Text style={styles.label}>How will you help?</Text>
-            <TextInput
-              style={[styles.input, styles.multilineInput]}
-              value={supportNote}
-              onChangeText={setSupportNote}
-              placeholder="I can meet at arrivals, help with train tickets, and speak Hindi and English."
-              multiline
-            />
-
-            <ToggleRow
+            <FormField label="Your name"><TextInput style={styles.input} value={helperName} onChangeText={setHelperName} placeholder="Anita Sharma" /></FormField>
+            <FormField label="Phone number"><TextInput style={styles.input} value={helperPhone} onChangeText={setHelperPhone} placeholder="+49 170 123 4567" keyboardType="phone-pad" /></FormField>
+            <FormField label="City"><TextInput style={styles.input} value={helperCity} onChangeText={setHelperCity} placeholder="Frankfurt" /></FormField>
+            <FormField label="Meeting point"><TextInput style={styles.input} value={meetingPoint} onChangeText={setMeetingPoint} placeholder="Terminal 1 arrivals, gate B" /></FormField>
+            <FormField label="How will you help?"><TextInput style={[styles.input, styles.multilineInput]} value={supportNote} onChangeText={setSupportNote} placeholder="I can meet at arrivals, help with train tickets, and speak Hindi and English." multiline /></FormField>
+            <FormField label="Transport">
+              <ToggleRow
               label="I can drive or coordinate local transport"
               checked={canDrive}
               onToggle={() => setCanDrive(!canDrive)}
-            />
-            <ToggleRow
+              />
+            </FormField>
+            <FormField label="Translation">
+              <ToggleRow
               label="I can translate during airport or hotel transfer"
               checked={canTranslate}
               onToggle={() => setCanTranslate(!canTranslate)}
-            />
-
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isSubmitting}>
-              <Text style={styles.submitButtonText}>{isSubmitting ? 'Submitting...' : 'Confirm Help Offer'}</Text>
-            </TouchableOpacity>
-          </View>
+              />
+            </FormField>
+            <FormAction><TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isSubmitting}><Text style={styles.submitButtonText}>{isSubmitting ? 'Submitting...' : 'Confirm Help Offer'}</Text></TouchableOpacity></FormAction>
+          </ResponsiveForm>
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -258,13 +233,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     color: '#111827',
-  },
-  label: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#111827',
-    marginBottom: 8,
-    marginTop: 12,
   },
   input: {
     backgroundColor: '#F3F4F6',

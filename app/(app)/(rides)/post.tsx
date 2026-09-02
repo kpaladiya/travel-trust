@@ -17,6 +17,7 @@ import { useRouter } from 'expo-router';
 import { useAuth } from '../../../src/context/AuthContext';
 import { hasGooglePlacesApiKey, searchPlaceSuggestions, type PlaceSuggestion } from '../../../src/services/google-places';
 import { submitRide } from '../../../src/services/rides';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 type ActiveField = 'from' | 'to' | null;
 
@@ -181,7 +182,7 @@ export default function PostRideScreen() {
             </View>
           </View>
 
-          <View style={styles.form}>
+          <ResponsiveForm style={styles.form}>
             <View style={styles.infoCard}>
               <Text style={styles.infoTitle}>{driverName}</Text>
               <Text style={styles.infoText}>This ride will be posted from your current profile.</Text>
@@ -217,23 +218,27 @@ export default function PostRideScreen() {
               onSelectSuggestion={(suggestion) => handleSelectSuggestion('to', suggestion)}
             />
 
-            <Text style={styles.label}>Departure date</Text>
-            <TextInput style={styles.input} value={departureDate} onChangeText={setDepartureDate} placeholder="2026-06-12" />
+            <FormField label="Departure date">
+              <TextInput style={styles.input} value={departureDate} onChangeText={setDepartureDate} placeholder="2026-06-12" />
+            </FormField>
 
-            <View style={styles.inlineFields}>
+            <FormField label="Schedule">
+              <View style={styles.inlineFields}>
               <View style={styles.inlineField}>
-                <Text style={styles.label}>Departure time</Text>
+                <Text style={styles.inlineLabel}>Departure time</Text>
                 <TextInput style={styles.input} value={departureTime} onChangeText={setDepartureTime} placeholder="09:30" />
               </View>
               <View style={styles.inlineField}>
-                <Text style={styles.label}>Arrival time</Text>
+                <Text style={styles.inlineLabel}>Arrival time</Text>
                 <TextInput style={styles.input} value={arrivalTime} onChangeText={setArrivalTime} placeholder="11:00" />
               </View>
-            </View>
+              </View>
+            </FormField>
 
-            <View style={styles.inlineFields}>
+            <FormField label="Seats and price">
+              <View style={styles.inlineFields}>
               <View style={styles.inlineField}>
-                <Text style={styles.label}>Price per seat</Text>
+                <Text style={styles.inlineLabel}>Price per seat</Text>
                 <TextInput
                   style={styles.input}
                   value={pricePerSeat}
@@ -243,7 +248,7 @@ export default function PostRideScreen() {
                 />
               </View>
               <View style={styles.inlineField}>
-                <Text style={styles.label}>Total seats</Text>
+                <Text style={styles.inlineLabel}>Total seats</Text>
                 <TextInput
                   style={styles.input}
                   value={totalSeats}
@@ -252,42 +257,44 @@ export default function PostRideScreen() {
                   placeholder="3"
                 />
               </View>
-            </View>
+              </View>
+            </FormField>
 
-            <Text style={styles.label}>Car make</Text>
-            <TextInput style={styles.input} value={carMake} onChangeText={setCarMake} placeholder="Mercedes" />
+            <FormField label="Car make">
+              <TextInput style={styles.input} value={carMake} onChangeText={setCarMake} placeholder="Mercedes" />
+            </FormField>
 
-            <Text style={styles.label}>Car model</Text>
-            <TextInput style={styles.input} value={carModel} onChangeText={setCarModel} placeholder="C-Class" />
+            <FormField label="Car model">
+              <TextInput style={styles.input} value={carModel} onChangeText={setCarModel} placeholder="C-Class" />
+            </FormField>
 
-            <View style={styles.inlineFields}>
+            <FormField label="Car details">
+              <View style={styles.inlineFields}>
               <View style={styles.inlineField}>
-                <Text style={styles.label}>Color</Text>
+                <Text style={styles.inlineLabel}>Color</Text>
                 <TextInput style={styles.input} value={carColor} onChangeText={setCarColor} placeholder="Silver" />
               </View>
               <View style={styles.inlineField}>
-                <Text style={styles.label}>License plate</Text>
+                <Text style={styles.inlineLabel}>License plate</Text>
                 <TextInput style={styles.input} value={licensePlate} onChangeText={setLicensePlate} placeholder="FR-123-ABC" />
               </View>
-            </View>
+              </View>
+            </FormField>
 
-            <Text style={styles.label}>Description</Text>
-            <TextInput
-              style={[styles.input, styles.multilineInput]}
-              value={description}
-              onChangeText={setDescription}
-              placeholder="Describe the route, comfort, luggage space, and pickup notes."
-              multiline
-            />
+            <FormField label="Description">
+              <TextInput style={[styles.input, styles.multilineInput]} value={description} onChangeText={setDescription} placeholder="Describe the route, comfort, luggage space, and pickup notes." multiline />
+            </FormField>
 
-            <ToggleRow label="Smoking allowed" checked={smoker} onToggle={() => setSmoker(!smoker)} />
-            <ToggleRow label="Music okay" checked={music} onToggle={() => setMusic(!music)} />
-            <ToggleRow label="Luggage accepted" checked={luggage} onToggle={() => setLuggage(!luggage)} />
+            <FormField label="Smoking"><ToggleRow label="Smoking allowed" checked={smoker} onToggle={() => setSmoker(!smoker)} /></FormField>
+            <FormField label="Music"><ToggleRow label="Music okay" checked={music} onToggle={() => setMusic(!music)} /></FormField>
+            <FormField label="Luggage"><ToggleRow label="Luggage accepted" checked={luggage} onToggle={() => setLuggage(!luggage)} /></FormField>
 
-            <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isSubmitting}>
-              <Text style={styles.submitButtonText}>{isSubmitting ? 'Posting...' : 'Post Ride'}</Text>
-            </TouchableOpacity>
-          </View>
+            <FormAction>
+              <TouchableOpacity style={styles.submitButton} onPress={handleSubmit} disabled={isSubmitting}>
+                <Text style={styles.submitButtonText}>{isSubmitting ? 'Posting...' : 'Post Ride'}</Text>
+              </TouchableOpacity>
+            </FormAction>
+          </ResponsiveForm>
         </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
@@ -318,8 +325,7 @@ function PlaceField({
   const showSuggestions = isActive && suggestions.length > 0;
 
   return (
-    <View style={styles.fieldGroup}>
-      <Text style={styles.label}>{label}</Text>
+    <FormField label={label} labelStyle={styles.label} style={styles.fieldGroup}>
       <View style={styles.inputWrapper}>
         <Ionicons name="location" size={20} color="#007AFF" />
         <TextInput
@@ -351,7 +357,7 @@ function PlaceField({
           ))}
         </View>
       )}
-    </View>
+    </FormField>
   );
 }
 
@@ -384,8 +390,9 @@ const styles = StyleSheet.create({
   },
   infoTitle: { fontSize: 14, fontWeight: '700', color: '#1D4ED8' },
   infoText: { marginTop: 4, fontSize: 12, color: '#1E40AF' },
-  fieldGroup: { marginTop: 12 },
+  fieldGroup: { marginTop: 0 },
   label: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8, marginTop: 12 },
+  inlineLabel: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8 },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',

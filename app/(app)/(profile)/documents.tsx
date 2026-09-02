@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import { getDocuments, submitDocument } from '../../../src/services/profile-tools';
 import type { UserDocument } from '../../../src/types/profile-tools';
+import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
 
 const statusColors = {
   missing: '#9CA3AF',
@@ -78,19 +79,13 @@ export default function DocumentsScreen() {
           ))}
         </View>
 
-        <View style={styles.formSection}>
+        <ResponsiveForm style={styles.formSection}>
           <Text style={styles.sectionTitle}>Submit or replace a document</Text>
-          <Text style={styles.label}>Document type</Text>
-          <TextInput style={styles.input} value={documentType} onChangeText={setDocumentType} placeholder="Passport" />
-          <Text style={styles.label}>Document number</Text>
-          <TextInput style={styles.input} value={documentNumber} onChangeText={setDocumentNumber} placeholder="P1234567" />
-          <Text style={styles.label}>Issuing country</Text>
-          <TextInput style={styles.input} value={country} onChangeText={setCountry} placeholder="India" />
-
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>Submit Document</Text>
-          </TouchableOpacity>
-        </View>
+          <FormField label="Document type"><TextInput style={styles.input} value={documentType} onChangeText={setDocumentType} placeholder="Passport" /></FormField>
+          <FormField label="Document number"><TextInput style={styles.input} value={documentNumber} onChangeText={setDocumentNumber} placeholder="P1234567" /></FormField>
+          <FormField label="Issuing country"><TextInput style={styles.input} value={country} onChangeText={setCountry} placeholder="India" /></FormField>
+          <FormAction><TouchableOpacity style={styles.submitButton} onPress={handleSubmit}><Text style={styles.submitButtonText}>Submit Document</Text></TouchableOpacity></FormAction>
+        </ResponsiveForm>
       </ScrollView>
     </SafeAreaView>
   );
@@ -110,7 +105,6 @@ const styles = StyleSheet.create({
   badgeText: { fontSize: 11, fontWeight: '700', textTransform: 'capitalize' },
   formSection: { backgroundColor: '#fff', padding: 16, marginTop: 8 },
   sectionTitle: { fontSize: 16, fontWeight: '700', color: '#111827', marginBottom: 8 },
-  label: { fontSize: 13, fontWeight: '700', color: '#111827', marginBottom: 8, marginTop: 12 },
   input: {
     backgroundColor: '#F3F4F6',
     borderRadius: 10,

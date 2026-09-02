@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useAuth } from '../../src/context/AuthContext';
+import { FormAction, ResponsiveForm } from '../../src/components/forms/ResponsiveForm';
 
 export default function VerifyEmailScreen() {
   const router = useRouter();
@@ -66,7 +67,7 @@ export default function VerifyEmailScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
+      <ResponsiveForm style={styles.content}>
         <View style={styles.iconWrapper}>
           <Ionicons name="mail-open-outline" size={40} color="#007AFF" />
         </View>
@@ -77,7 +78,8 @@ export default function VerifyEmailScreen() {
           Open the email, finish verification, then return here.
         </Text>
 
-        <TouchableOpacity
+        <FormAction centered style={styles.primaryAction}>
+          <TouchableOpacity
           style={[styles.primaryButton, isChecking && styles.buttonDisabled]}
           onPress={() => void handleCheckVerification()}
           disabled={isChecking || isResending || isSwitching}
@@ -90,9 +92,11 @@ export default function VerifyEmailScreen() {
               <Text style={styles.primaryButtonText}>I&apos;ve verified my email</Text>
             </>
           )}
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </FormAction>
 
-        <TouchableOpacity
+        <FormAction centered style={styles.secondaryAction}>
+          <TouchableOpacity
           style={[styles.secondaryButton, isResending && styles.buttonDisabled]}
           onPress={() => void handleResend()}
           disabled={isChecking || isResending || isSwitching}
@@ -105,7 +109,8 @@ export default function VerifyEmailScreen() {
               <Text style={styles.secondaryButtonText}>Resend verification link</Text>
             </>
           )}
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </FormAction>
 
         <TouchableOpacity
           style={styles.tertiaryButton}
@@ -118,7 +123,7 @@ export default function VerifyEmailScreen() {
             <Text style={styles.tertiaryButtonText}>Use a different email address</Text>
           )}
         </TouchableOpacity>
-      </View>
+      </ResponsiveForm>
     </SafeAreaView>
   );
 }
@@ -161,7 +166,6 @@ const styles = StyleSheet.create({
     color: '#111827',
   },
   primaryButton: {
-    marginTop: 28,
     minHeight: 52,
     borderRadius: 12,
     backgroundColor: '#007AFF',
@@ -170,13 +174,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
   },
+  primaryAction: {
+    marginTop: 28,
+  },
   primaryButtonText: {
     color: '#fff',
     fontSize: 15,
     fontWeight: '700',
   },
   secondaryButton: {
-    marginTop: 12,
     minHeight: 52,
     borderRadius: 12,
     borderWidth: 1,
@@ -186,6 +192,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     gap: 8,
+  },
+  secondaryAction: {
+    marginTop: 12,
   },
   secondaryButtonText: {
     color: '#007AFF',
