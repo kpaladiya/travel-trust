@@ -276,15 +276,6 @@ export default function RidesHomeScreen() {
         </View>
 
         <ResponsiveForm style={styles.searchContainer}>
-          {!hasGooglePlacesApiKey && (
-            <View style={styles.infoBanner}>
-              <Ionicons name="information-circle-outline" size={18} color="#92400E" />
-              <Text style={styles.infoBannerText}>
-                Search by city, airport, or address to find a matching ride.
-              </Text>
-            </View>
-          )}
-
           {placesError && (
             <View style={styles.errorBanner}>
               <Ionicons name="alert-circle-outline" size={18} color="#B91C1C" />
@@ -295,7 +286,7 @@ export default function RidesHomeScreen() {
           <PlaceField
             label="From"
             value={fromCity}
-            placeholder="Enter departure"
+            placeholder="Departure city, airport, or address"
             isActive={activeField === 'from'}
             isLoading={isFromLoading}
             suggestions={fromSuggestions}
@@ -310,7 +301,7 @@ export default function RidesHomeScreen() {
           <PlaceField
             label="To"
             value={toCity}
-            placeholder="Enter destination"
+            placeholder="Destination city, airport, or address"
             isActive={activeField === 'to'}
             isLoading={isToLoading}
             suggestions={toSuggestions}

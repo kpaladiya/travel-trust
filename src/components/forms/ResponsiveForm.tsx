@@ -86,10 +86,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   labelColumn: {
+    width: '100%',
+    marginBottom: 8,
   },
   desktopLabelColumn: {
     width: labelColumnWidth,
     marginRight: 16,
+    marginBottom: 0,
     paddingTop: 12,
   },
   label: {
