@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { trustDashboardData } from '../../../src/data/trust-dashboard';
 import type {
   IncidentSeverity,
@@ -11,6 +11,8 @@ import type {
   TrustTier,
   VerificationStatus,
 } from '../../../src/types/trust';
+import { useAuth } from '../../../src/context/AuthContext';
+import { canAccessAdminConsole } from '../../../src/services/admin-access';
 
 const roleLabels: Record<TrustRole, string> = {
   rider: 'Rider',
@@ -114,6 +116,11 @@ function FlaggedProfileCard({ profile }: { profile: TrustProfile }) {
 
 export default function TrustDashboardScreen() {
   const router = useRouter();
+  const { user } = useAuth();
+
+  if (!canAccessAdminConsole(user?.email)) {
+    return <Redirect href="/(app)/(profile)" />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>

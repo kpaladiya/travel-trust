@@ -142,14 +142,16 @@ export default function ProfileScreen() {
             <Ionicons name="chevron-forward" size={20} color="#ccc" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => router.push('/(app)/(profile)/trust-dashboard')}
-          >
-            <Ionicons name="analytics-outline" size={20} color="#007AFF" />
-            <Text style={styles.menuItemText}>Trust Dashboard</Text>
-            <Ionicons name="chevron-forward" size={20} color="#ccc" />
-          </TouchableOpacity>
+          {canManageAdminConsole ? (
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => router.push('/(app)/(profile)/trust-dashboard')}
+            >
+              <Ionicons name="analytics-outline" size={20} color="#007AFF" />
+              <Text style={styles.menuItemText}>Trust Dashboard</Text>
+              <Ionicons name="chevron-forward" size={20} color="#ccc" />
+            </TouchableOpacity>
+          ) : null}
 
           {canManageAdminConsole ? (
             <TouchableOpacity
