@@ -16,7 +16,7 @@ import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../src/context/AuthContext';
 import SocialAuthButtons from '../../src/components/auth/SocialAuthButtons';
-import { FormAction, FormField, ResponsiveForm } from '../../src/components/forms/ResponsiveForm';
+import { CenteredFormContent, FormAction, FormField, ResponsiveForm } from '../../src/components/forms/ResponsiveForm';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -156,32 +156,34 @@ export default function LoginScreen() {
             </FormAction>
           </ResponsiveForm>
 
-          <View style={styles.socialSection}>
-            <SocialAuthButtons disabled={isSigningIn} mode="continue" />
-          </View>
-
-          <View style={styles.demoSection}>
-            <Text style={styles.demoTitle}>Explore the interactive demo</Text>
-            <Text style={styles.demoDescription}>Browse rides as a traveler or publish a ride as a driver. Demo changes stay in this browser.</Text>
-            <View style={styles.demoActions}>
-              <TouchableOpacity
-                style={[styles.demoButton, isSigningIn && styles.buttonDisabled]}
-                onPress={() => void handleDemoSignIn('finder')}
-                disabled={isSigningIn}
-              >
-                <Ionicons name="search-outline" size={18} color="#007AFF" />
-                <Text style={styles.demoButtonText}>Try Finder</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.demoButton, isSigningIn && styles.buttonDisabled]}
-                onPress={() => void handleDemoSignIn('creator')}
-                disabled={isSigningIn}
-              >
-                <Ionicons name="car-outline" size={18} color="#007AFF" />
-                <Text style={styles.demoButtonText}>Try Creator</Text>
-              </TouchableOpacity>
+          <CenteredFormContent>
+            <View style={styles.socialSection}>
+              <SocialAuthButtons disabled={isSigningIn} mode="continue" />
             </View>
-          </View>
+
+            <View style={styles.demoSection}>
+              <Text style={styles.demoTitle}>Explore the interactive demo</Text>
+              <Text style={styles.demoDescription}>Browse rides as a traveler or publish a ride as a driver. Demo changes stay in this browser.</Text>
+              <View style={styles.demoActions}>
+                <TouchableOpacity
+                  style={[styles.demoButton, isSigningIn && styles.buttonDisabled]}
+                  onPress={() => void handleDemoSignIn('finder')}
+                  disabled={isSigningIn}
+                >
+                  <Ionicons name="search-outline" size={18} color="#007AFF" />
+                  <Text style={styles.demoButtonText}>Try Finder</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.demoButton, isSigningIn && styles.buttonDisabled]}
+                  onPress={() => void handleDemoSignIn('creator')}
+                  disabled={isSigningIn}
+                >
+                  <Ionicons name="car-outline" size={18} color="#007AFF" />
+                  <Text style={styles.demoButtonText}>Try Creator</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </CenteredFormContent>
 
           <View style={styles.signupContainer}>
             <Text style={styles.signupText}>Don&apos;t have an account? </Text>

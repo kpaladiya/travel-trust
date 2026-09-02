@@ -13,6 +13,7 @@ import {
 const desktopBreakpoint = 768;
 const labelColumnWidth = 180;
 const controlColumnWidth = 560;
+const secondaryContentWidth = controlColumnWidth + 48;
 
 function useDesktopFormLayout() {
   const { width } = useWindowDimensions();
@@ -60,6 +61,12 @@ export function FormAction({
   const isDesktop = useDesktopFormLayout();
 
   return <View style={[styles.action, isDesktop && styles.desktopAction, isDesktop && centered && styles.centeredAction, style]}>{children}</View>;
+}
+
+export function CenteredFormContent({ children, style }: { children: React.ReactNode; style?: StyleProp<ViewStyle> }) {
+  const isDesktop = useDesktopFormLayout();
+
+  return <View style={[styles.form, isDesktop && styles.desktopSecondaryContent, style]}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
@@ -115,6 +122,10 @@ const styles = StyleSheet.create({
   },
   centeredAction: {
     marginLeft: 0,
+    alignSelf: 'center',
+  },
+  desktopSecondaryContent: {
+    width: secondaryContentWidth,
     alignSelf: 'center',
   },
 });

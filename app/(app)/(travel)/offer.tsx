@@ -117,11 +117,7 @@ export default function OfferHelpScreen() {
                 <Text style={styles.pricingValue}>{formatEuro(plan.travelerPriceEUR)}</Text>
               </View>
               <View style={styles.pricingRow}>
-                <Text style={styles.pricingLabel}>Platform commission</Text>
-                <Text style={styles.pricingValue}>{formatEuro(plan.platformCommissionEUR)}</Text>
-              </View>
-              <View style={styles.pricingRow}>
-                <Text style={styles.pricingLabel}>You receive after 20% deduction</Text>
+                <Text style={styles.pricingLabel}>Estimated payout</Text>
                 <Text style={styles.pricingValue}>{formatEuro(plan.helperPayoutEUR)}</Text>
               </View>
             </View>

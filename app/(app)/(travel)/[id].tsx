@@ -117,7 +117,6 @@ export default function TravelRequestScreen() {
               </View>
             ))}
             <View style={styles.pricingBox}>
-              <Text style={styles.pricingText}>Platform commission: {formatEuro(plan.platformCommissionEUR)}</Text>
               <Text style={styles.pricingText}>Helper payout: {formatEuro(plan.helperPayoutEUR)}</Text>
             </View>
           </View>

@@ -49,9 +49,7 @@ export default function HelpConfirmationScreen() {
           <Text style={styles.summaryValue}>{offer?.status ?? 'submitted'}</Text>
           <Text style={styles.summaryLabel}>Traveler pays</Text>
           <Text style={styles.summaryValue}>{formatEuro(plan?.travelerPriceEUR ?? 0)}</Text>
-          <Text style={styles.summaryLabel}>Platform commission</Text>
-          <Text style={styles.summaryValue}>{formatEuro(plan?.platformCommissionEUR ?? 0)}</Text>
-          <Text style={styles.summaryLabel}>Your payout after 20% deduction</Text>
+          <Text style={styles.summaryLabel}>Estimated payout</Text>
           <Text style={styles.summaryValue}>{formatEuro(plan?.helperPayoutEUR ?? 0)}</Text>
           <Text style={styles.summaryLabel}>Meeting point</Text>
           <Text style={styles.summaryValue}>{offer?.meetingPoint ?? 'Not available'}</Text>

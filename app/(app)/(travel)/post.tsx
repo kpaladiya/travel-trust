@@ -167,10 +167,6 @@ export default function PostTravelRequestScreen() {
                 <Text style={styles.pricingValue}>{formatEuro(pricing.travelerPriceEUR)}</Text>
               </View>
               <View style={styles.pricingRow}>
-                <Text style={styles.pricingLabel}>Platform commission (20%)</Text>
-                <Text style={styles.pricingValue}>{formatEuro(pricing.platformCommissionEUR)}</Text>
-              </View>
-              <View style={styles.pricingRow}>
                 <Text style={styles.pricingLabel}>Helper receives</Text>
                 <Text style={styles.pricingValue}>{formatEuro(pricing.helperPayoutEUR)}</Text>
               </View>
