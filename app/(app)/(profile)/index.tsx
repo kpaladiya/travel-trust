@@ -14,6 +14,7 @@ import { useAuth } from '../../../src/context/AuthContext';
 import { useRouter } from 'expo-router';
 import { demoUserProfile } from '../../../src/data/demo-rides';
 import { userExperienceCopy } from '../../../src/types/user-mode';
+import { canAccessAdminConsole } from '../../../src/services/admin-access';
 
 export default function ProfileScreen() {
   const { user, signOut, experienceMode, setExperienceMode } = useAuth();
@@ -47,6 +48,7 @@ export default function ProfileScreen() {
 
   const profile = user || demoUserProfile;
   const modeCopy = userExperienceCopy[experienceMode];
+  const canManageAdminConsole = canAccessAdminConsole(user?.email);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -149,14 +151,16 @@ export default function ProfileScreen() {
             <Ionicons name="chevron-forward" size={20} color="#ccc" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.menuItem}
-            onPress={() => router.push('/(app)/(profile)/admin-console')}
-          >
-            <Ionicons name="speedometer-outline" size={20} color="#007AFF" />
-            <Text style={styles.menuItemText}>Admin Console</Text>
-            <Ionicons name="chevron-forward" size={20} color="#ccc" />
-          </TouchableOpacity>
+          {canManageAdminConsole ? (
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => router.push('/(app)/(profile)/admin-console')}
+            >
+              <Ionicons name="speedometer-outline" size={20} color="#007AFF" />
+              <Text style={styles.menuItemText}>Admin Console</Text>
+              <Ionicons name="chevron-forward" size={20} color="#ccc" />
+            </TouchableOpacity>
+          ) : null}
 
           <TouchableOpacity style={styles.menuItem} onPress={() => router.push('/(app)/(profile)/help-support')}>
             <Ionicons name="help-circle-outline" size={20} color="#007AFF" />

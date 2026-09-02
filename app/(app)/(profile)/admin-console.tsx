@@ -1,9 +1,11 @@
 import React from 'react';
 import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
 import { adminConsoleData } from '../../../src/data/admin-console';
 import type { AdminAlert, AdminKpi, DataRightsRequest, LegalVersionEntry, VerificationReview } from '../../../src/types/admin';
+import { useAuth } from '../../../src/context/AuthContext';
+import { canAccessAdminConsole } from '../../../src/services/admin-access';
 
 const trendColors: Record<AdminKpi['trend'], string> = {
   up: '#1F9D55',
@@ -32,6 +34,11 @@ const legalStatusColors: Record<LegalVersionEntry['status'], string> = {
 
 export default function AdminConsoleScreen() {
   const router = useRouter();
+  const { user } = useAuth();
+
+  if (!canAccessAdminConsole(user?.email)) {
+    return <Redirect href="/(app)/(profile)" />;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
