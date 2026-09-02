@@ -19,11 +19,7 @@ body {
 
   #root > * {
     width: 100%;
-    max-width: 760px;
     min-height: 100vh;
-    margin: 0 auto;
     overflow: hidden;
-    background: #ffffff;
-    box-shadow: 0 0 48px rgba(17, 24, 39, 0.12);
   }
 }

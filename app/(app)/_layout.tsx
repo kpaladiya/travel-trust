@@ -4,28 +4,49 @@ import { Ionicons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 
 export default function AppLayout() {
+  const isWeb = Platform.OS === 'web';
+
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
+        tabBarPosition: isWeb ? 'left' : 'bottom',
         tabBarActiveTintColor: '#007AFF',
         tabBarInactiveTintColor: '#6B7280',
         tabBarLabelStyle: {
-          fontSize: 12,
+          fontSize: isWeb ? 14 : 12,
           fontWeight: '600',
         },
-        tabBarStyle: {
-          backgroundColor: '#fff',
-          borderTopWidth: 0,
-          paddingBottom: Platform.OS === 'ios' ? 20 : 10,
-          paddingTop: 10,
-          height: Platform.OS === 'ios' ? 92 : 72,
-          shadowColor: '#111827',
-          shadowOffset: { width: 0, height: -4 },
-          shadowOpacity: 0.08,
-          shadowRadius: 14,
-          elevation: 12,
-        },
+        tabBarItemStyle: isWeb
+          ? {
+              borderRadius: 10,
+              marginHorizontal: 12,
+              marginVertical: 4,
+              minHeight: 48,
+            }
+          : undefined,
+        tabBarStyle: isWeb
+          ? {
+              width: 240,
+              paddingTop: 28,
+              paddingBottom: 28,
+              backgroundColor: '#fff',
+              borderRightWidth: 1,
+              borderRightColor: '#E5E7EB',
+              borderTopWidth: 0,
+            }
+          : {
+              backgroundColor: '#fff',
+              borderTopWidth: 0,
+              paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+              paddingTop: 10,
+              height: Platform.OS === 'ios' ? 92 : 72,
+              shadowColor: '#111827',
+              shadowOffset: { width: 0, height: -4 },
+              shadowOpacity: 0.08,
+              shadowRadius: 14,
+              elevation: 12,
+            },
       }}
     >
       {/* Rides Tab */}
