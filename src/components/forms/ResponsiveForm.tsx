@@ -119,9 +119,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   desktopAction: {
-    width: 'auto',
+    width: controlColumnWidth,
     marginLeft: labelColumnWidth + 16,
-    maxWidth: controlColumnWidth,
   },
   centeredAction: {
     marginLeft: 0,
