@@ -22,6 +22,7 @@ import {
 import { submitTravelPlan } from '../../../src/services/travel-plans';
 import type { TravelSupportServiceCode } from '../../../src/types/travel-help';
 import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
+import { DateTimeInput, formatDateInput } from '../../../src/components/forms/DateTimeInput';
 
 export default function PostTravelRequestScreen() {
   const router = useRouter();
@@ -127,8 +128,10 @@ export default function PostTravelRequestScreen() {
 
             <FormField label="From city"><TextInput style={styles.input} value={fromCity} onChangeText={setFromCity} placeholder="Delhi" /></FormField>
             <FormField label="To city"><TextInput style={styles.input} value={toCity} onChangeText={setToCity} placeholder="Frankfurt" /></FormField>
-            <FormField label="Arrival date"><TextInput style={styles.input} value={arrivalDate} onChangeText={setArrivalDate} placeholder="2026-06-12" /></FormField>
-            <FormField label="Arrival time"><TextInput style={styles.input} value={arrivalTime} onChangeText={setArrivalTime} placeholder="18:30" /></FormField>
+            <FormField label="Arrival date">
+              <DateTimeInput minDate={formatDateInput(new Date())} mode="date" onChange={setArrivalDate} value={arrivalDate} />
+            </FormField>
+            <FormField label="Arrival time"><DateTimeInput mode="time" onChange={setArrivalTime} value={arrivalTime} /></FormField>
             <FormField label="Airport / station"><TextInput style={styles.input} value={arrivalAirport} onChangeText={setArrivalAirport} placeholder="Frankfurt Airport (FRA)" /></FormField>
             <FormField label="Request title"><TextInput style={styles.input} value={assistanceTitle} onChangeText={setAssistanceTitle} placeholder="Need airport guidance and local transport help" /></FormField>
             <FormField label="Describe what you need"><TextInput style={[styles.input, styles.multilineInput]} value={description} onChangeText={setDescription} placeholder="I am arriving for the first time and need help reaching my hotel safely." multiline /></FormField>

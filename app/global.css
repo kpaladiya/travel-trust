@@ -9,6 +9,19 @@ body {
   background: #f3f6fb;
 }
 
+.date-time-input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #f3f4f6;
+  color: #111827;
+  font: inherit;
+}
+
 @media screen and (min-width: 768px) {
   #root {
     min-height: 100vh;

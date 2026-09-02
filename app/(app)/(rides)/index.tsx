@@ -10,17 +10,16 @@ import {
   SafeAreaView,
   FlatList,
   Alert,
-  Platform,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import { useAuth } from '../../../src/context/AuthContext';
 import { hasGooglePlacesApiKey, searchPlaceSuggestions, type PlaceSuggestion } from '../../../src/services/google-places';
 import { getRides } from '../../../src/services/rides';
 import type { Ride } from '../../../src/types/rides';
 import { userExperienceCopy } from '../../../src/types/user-mode';
 import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
+import { DateTimeInput, formatDateInput } from '../../../src/components/forms/DateTimeInput';
 
 type ActiveField = 'from' | 'to' | null;
 
@@ -53,7 +52,6 @@ export default function RidesHomeScreen() {
   const [fromCity, setFromCity] = useState('');
   const [toCity, setToCity] = useState('');
   const [date, setDate] = useState(new Date(Date.now() + 86400000));
-  const [showDatePicker, setShowDatePicker] = useState(false);
   const [allRides, setAllRides] = useState<Ride[]>([]);
   const [rides, setRides] = useState<Ride[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -143,15 +141,6 @@ export default function RidesHomeScreen() {
 
   const myPostedRides = allRides.filter((ride) => ride.createdByUserId === user?.id);
   const modeCopy = userExperienceCopy[experienceMode];
-
-  const handleDateChange = (_event: unknown, selectedDate?: Date) => {
-    if (Platform.OS === 'android') {
-      setShowDatePicker(false);
-    }
-    if (selectedDate) {
-      setDate(selectedDate);
-    }
-  };
 
   const handleSearch = () => {
     if (!fromCity.trim() || !toCity.trim()) {
@@ -334,28 +323,13 @@ export default function RidesHomeScreen() {
           />
 
           <FormField label="Date">
-            <TouchableOpacity style={styles.dateButton} onPress={() => setShowDatePicker(true)}>
-              <Ionicons name="calendar" size={20} color="#007AFF" />
-              <Text style={styles.dateButtonText}>
-                {date.toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
-                  day: 'numeric',
-                })}
-              </Text>
-            </TouchableOpacity>
-          </FormField>
-
-          {showDatePicker && (
-            <DateTimePicker
-              value={date}
+            <DateTimeInput
+              minDate={formatDateInput(new Date())}
               mode="date"
-              display={Platform.OS === 'ios' ? 'spinner' : 'default'}
-              onChange={handleDateChange}
-              minimumDate={new Date()}
-              maximumDate={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)}
+              onChange={(value) => setDate(new Date(`${value}T12:00:00`))}
+              value={formatDateInput(date)}
             />
-          )}
+          </FormField>
 
           <FormAction>
             <TouchableOpacity style={styles.searchButton} onPress={handleSearch} disabled={isLoading}>

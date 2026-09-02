@@ -18,6 +18,7 @@ import { useAuth } from '../../../src/context/AuthContext';
 import { hasGooglePlacesApiKey, searchPlaceSuggestions, type PlaceSuggestion } from '../../../src/services/google-places';
 import { submitRide } from '../../../src/services/rides';
 import { FormAction, FormField, ResponsiveForm } from '../../../src/components/forms/ResponsiveForm';
+import { DateTimeInput, formatDateInput } from '../../../src/components/forms/DateTimeInput';
 
 type ActiveField = 'from' | 'to' | null;
 
@@ -219,18 +220,18 @@ export default function PostRideScreen() {
             />
 
             <FormField label="Departure date">
-              <TextInput style={styles.input} value={departureDate} onChangeText={setDepartureDate} placeholder="2026-06-12" />
+              <DateTimeInput minDate={formatDateInput(new Date())} mode="date" onChange={setDepartureDate} value={departureDate} />
             </FormField>
 
             <FormField label="Schedule">
               <View style={styles.inlineFields}>
               <View style={styles.inlineField}>
                 <Text style={styles.inlineLabel}>Departure time</Text>
-                <TextInput style={styles.input} value={departureTime} onChangeText={setDepartureTime} placeholder="09:30" />
+                <DateTimeInput mode="time" onChange={setDepartureTime} value={departureTime} />
               </View>
               <View style={styles.inlineField}>
                 <Text style={styles.inlineLabel}>Arrival time</Text>
-                <TextInput style={styles.input} value={arrivalTime} onChangeText={setArrivalTime} placeholder="11:00" />
+                <DateTimeInput mode="time" onChange={setArrivalTime} value={arrivalTime} />
               </View>
               </View>
             </FormField>
