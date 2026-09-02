@@ -22,6 +22,44 @@ export const complianceHighlights: ComplianceHighlight[] = [
     title: 'Permission hygiene',
     description: 'Location should stay foreground-only unless you add a real background use case and legal basis.',
   },
+  {
+    title: 'Identity verification',
+    description:
+      'Government ID verification is required before marketplace access. Document numbers and copies should never be displayed in the app after submission.',
+  },
+  {
+    title: 'Contact privacy',
+    description:
+      'Names, phone numbers, email addresses, and exact meeting locations remain private until the required booking, payment, and confirmation conditions are met.',
+  },
+  {
+    title: 'Safety and payments',
+    description:
+      'Report safety concerns through Support. Payment and payout records should be handled by the payment provider and retained only as required for support, fraud prevention, and law.',
+  },
+];
+
+export const regionalPrivacyRights: ComplianceHighlight[] = [
+  {
+    title: 'European Union and EEA',
+    description:
+      'GDPR rights can include access, correction, deletion, restriction, objection, portability, consent withdrawal, and a complaint to the relevant supervisory authority.',
+  },
+  {
+    title: 'United Kingdom',
+    description:
+      'UK users receive equivalent information and data-rights handling under UK data-protection law, including the ability to raise a concern with the ICO.',
+  },
+  {
+    title: 'United States',
+    description:
+      'US privacy rights vary by state. Where applicable, users can request access, correction, deletion, and opt out of covered sale, sharing, or targeted-advertising activities.',
+  },
+  {
+    title: 'Australia and other regions',
+    description:
+      'Users can request access or correction and receive notice about collection, use, overseas transfers, security, retention, and complaint handling. Local rights may provide additional protections.',
+  },
 ];
 
 export const legalDocuments: Record<LegalDocumentSlug, LegalDocument> = {
@@ -34,7 +72,7 @@ export const legalDocuments: Record<LegalDocumentSlug, LegalDocument> = {
         heading: 'What we collect',
         body: [
           'We collect account details such as name, email, phone number, city, profile image, and trust verification status.',
-          'We process trip, booking, payment-status, trust, and safety signals such as ride history, cancellations, incident reports, and support requests.',
+          'We process trip, booking, payment-status, trust, and safety signals such as ride history, cancellations, incident reports, and support requests. Government identity documents must be handled only through a private verification workflow.',
           'We request foreground location only when needed to match rides, set pickup points, or support travel assistance.',
         ],
       },
@@ -46,10 +84,18 @@ export const legalDocuments: Record<LegalDocumentSlug, LegalDocument> = {
         ],
       },
       {
-        heading: 'Your rights in the EU',
+        heading: 'Contact and payment privacy',
         body: [
-          'Users may request access, correction, export, restriction, objection, and deletion where applicable under GDPR.',
-          'Before launch, replace the placeholder support and DPO contact details with your real legal contacts and complaint handling process.',
+          'Names, phone numbers, email addresses, and exact meeting locations are not shown in public listings. They are released only after the marketplace conditions shown at booking are fulfilled.',
+          'Payment card data is processed by the payment provider, not stored by TravelTrust. Service fees, payouts, refunds, and disputes are handled under the applicable payment and marketplace terms.',
+        ],
+      },
+      {
+        heading: 'Regional privacy rights',
+        body: [
+          'EU and EEA users may have GDPR rights including access, correction, export, restriction, objection, deletion, and consent withdrawal. UK users have similar rights under UK data-protection law.',
+          'US, Australian, and other regional rights vary. The Compliance Center provides account controls and a contact route for access, correction, deletion, and applicable opt-out requests.',
+          'Before launch, replace the placeholder support and DPO contact details with your real legal contacts and complaint handling process for each market where TravelTrust operates.',
         ],
       },
     ],

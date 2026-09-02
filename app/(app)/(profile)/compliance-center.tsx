@@ -3,7 +3,7 @@ import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, Vi
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../../../src/context/AuthContext';
-import { complianceHighlights, providerDetails } from '../../../src/data/legal';
+import { complianceHighlights, providerDetails, regionalPrivacyRights } from '../../../src/data/legal';
 
 export default function ComplianceCenterScreen() {
   const router = useRouter();
@@ -53,7 +53,7 @@ export default function ComplianceCenterScreen() {
           </TouchableOpacity>
           <View style={styles.headerText}>
             <Text style={styles.title}>Compliance Center</Text>
-            <Text style={styles.subtitle}>Privacy, consent, and EU/Germany launch readiness</Text>
+            <Text style={styles.subtitle}>Privacy, verification, safety, and account controls</Text>
           </View>
         </View>
 
@@ -108,11 +108,52 @@ export default function ComplianceCenterScreen() {
         </View>
 
         <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Verification and contact privacy</Text>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Marketplace verification</Text>
+            <Text style={styles.cardText}>
+              Finder access requires a passport and residence permit review. Creator access also requires a driving licence review.
+            </Text>
+            <Text style={styles.cardText}>
+              Verification is completed through a private review workflow. Never send identity documents through chat or share document numbers with another user.
+            </Text>
+            <Text style={styles.cardTitle}>When contact details are shared</Text>
+            <Text style={styles.cardText}>
+              Names, phone numbers, email addresses, and exact meeting points remain hidden until both parties meet the booking, payment, and confirmation requirements.
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Safety and payments</Text>
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Get help or report a concern</Text>
+            <Text style={styles.cardText}>
+              Use Help &amp; Support to report a safety concern, suspected fraud, or booking dispute. Contact local emergency services in an immediate emergency.
+            </Text>
+            <Text style={styles.cardTitle}>Payment privacy</Text>
+            <Text style={styles.cardText}>
+              Payment cards must be processed by the payment provider. The app should show your booking and payout status without displaying another user&apos;s payment details or internal platform commissions.
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Key compliance highlights</Text>
           {complianceHighlights.map((highlight) => (
             <View key={highlight.title} style={styles.card}>
               <Text style={styles.cardTitle}>{highlight.title}</Text>
               <Text style={styles.cardText}>{highlight.description}</Text>
+            </View>
+          ))}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Regional privacy rights</Text>
+          {regionalPrivacyRights.map((right) => (
+            <View key={right.title} style={styles.card}>
+              <Text style={styles.cardTitle}>{right.title}</Text>
+              <Text style={styles.cardText}>{right.description}</Text>
             </View>
           ))}
         </View>
